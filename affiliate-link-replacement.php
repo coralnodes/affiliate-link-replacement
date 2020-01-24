@@ -2,18 +2,24 @@
 
 /*
 *  Plugin Name: Affiliate Link Replacement
-*  Description: Replaces the redirect links in posts with the actual affiliate links
+*  Description: Replaces the redirect links in posts with the actual affiliate links. 
+*  Requires redirections to be set using the Redirection WordPress Plugin
 *  Author: Abhinav R
 */
 
 /*
 *  parse the existence of /go/* in post_content
-*  check for its redirect in Redirect Manager
+*  check for it in Redirection plugin database table
 *  Replace the with actual affiliate link
 *  add rel="nofollow noopener noreferrer" tag
 */
 
 function insert_affiliate_links($content) {
+
+    if(!is_plugin_active('redirection/redirection.php')) {
+        return $content;
+    }
+
     global $wpdb;
 
     // get all links from post_content and filter affiliate links
